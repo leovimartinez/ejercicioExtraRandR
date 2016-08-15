@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814040542) do
+ActiveRecord::Schema.define(version: 20160814200157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "carreras", force: :cascade do |t|
+    t.string   "nombreCarrera"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "nombre"
@@ -22,6 +28,10 @@ ActiveRecord::Schema.define(version: 20160814040542) do
     t.string   "correo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "carrera_id"
   end
 
+  add_index "usuarios", ["carrera_id"], name: "index_usuarios_on_carrera_id", using: :btree
+
+  add_foreign_key "usuarios", "carreras"
 end
